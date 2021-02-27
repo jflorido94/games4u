@@ -11,6 +11,32 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
+
+    public function stocks()
+    {
+        return $this->hasMany(Stock::class);
+    }
+
+    public function sells()
+    {
+        return $this->hasMany(Sell::class);
+    }
+
+    public function sent_messages()
+    {
+        return $this->hasMany(Message::class, 'from_user_id', 'id');
+    }
+
+    public function received_messages()
+    {
+        return $this->hasMany(Message::class, 'to_user_id', 'id');
+    }
+
+
     /**
      * The attributes that are mass assignable.
      *

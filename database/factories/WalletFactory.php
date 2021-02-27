@@ -22,7 +22,7 @@ class WalletFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'amount' => $this->faker->randomFloat(2,0,50),
         ];
     }
 }

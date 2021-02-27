@@ -16,7 +16,6 @@ class CreateSellsTable extends Migration
         Schema::create('sells', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('stock_id')->constrained();
             $table->timestamps();
         });
     }
