@@ -16,9 +16,9 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('game_id');
-            $table->foreignId('sell_id')->constrained()->nullable();
+            $table->foreignId('sell_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('conditions_id')->constrained();
+            $table->foreignId('condition_id')->constrained();
             $table->unsignedBigInteger('price');
             $table->timestamps();
         });

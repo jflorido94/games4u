@@ -15,15 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(1)->hasWallet(1)->create([
+        User::factory()->hasWallet()->create([
             'name' => 'Javier',
             'surname' => 'Florido',
             'nick' => 'Administrador',
             'email' => 'jflorido94@hotmail.com',
             ]);
-        User::factory(10) ->hasStocks(random_int(0,10))
-                          ->hasSells(random_int(0,5))
-                          ->hasWallet(1)
-                          ->create();
+        User::factory(10)
+            ->hasStocks(random_int(0,10))
+            ->hasSells(random_int(0,5))
+            ->hasWallet()
+            ->create();
     }
 }

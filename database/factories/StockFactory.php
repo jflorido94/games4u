@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Stock;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use \App\Models\Condition;
 
 class StockFactory extends Factory
 {
@@ -23,6 +24,10 @@ class StockFactory extends Factory
     {
         return [
             'game_id' => $this->faker->numberBetween(500,1000),
+            'price' => $this->faker->randomNumber(rand(2, 4)),
+            'condition_id' => function () {
+                return Condition::all()->random()->id;
+            },
         ];
     }
 }

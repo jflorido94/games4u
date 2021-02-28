@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Message;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use \App\Models\User;
 
 class MessageFactory extends Factory
 {
@@ -22,7 +23,14 @@ class MessageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'description' => $this->faker->text,
+
+            'user_id' => function () {
+                return User::all()->random()->id;
+            },
+            'recipient_id' => function () {
+                return User::all()->random()->id;
+            },
         ];
     }
 }
