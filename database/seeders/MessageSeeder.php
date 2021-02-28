@@ -14,6 +14,6 @@ class MessageSeeder extends Seeder
      */
     public function run()
     {
-        Message::factory(100);
+        Message::factory(100)->create();
     }
 }

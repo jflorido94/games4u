@@ -25,12 +25,15 @@ class MessageFactory extends Factory
         return [
             'description' => $this->faker->text,
 
-            'user_id' => function () {
+            'to_user_id' => function () {
                 return User::all()->random()->id;
             },
-            'recipient_id' => function () {
+            'from_user_id' => function () {
                 return User::all()->random()->id;
             },
+
+            'read' => $this->faker->boolean(25),
+
         ];
     }
 }
