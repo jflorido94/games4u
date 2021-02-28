@@ -15,6 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+
+    // return \App\Models\Wallet::all()->dd();
+
+    // return \App\Models\Wallet::with('user')->get()->dd();
+    // return \App\Models\User::with('wallet')->find(4);
 });
 
 Route::get('/dashboard', function () {

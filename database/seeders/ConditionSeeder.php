@@ -26,5 +26,6 @@ class ConditionSeeder extends Seeder
             'name' => 'Usado',
             'description' => 'Un artículo que se ha usado con anterioridad. El artículo puede mostrar un deterioro superficial, pero funciona perfectamente.',
         ]);
+
     }
 }

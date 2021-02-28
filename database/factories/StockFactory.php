@@ -22,7 +22,7 @@ class StockFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'game_id' => $this->faker->numberBetween(500,1000),
         ];
     }
 }

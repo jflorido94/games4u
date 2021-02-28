@@ -15,15 +15,15 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        User::factory(1)->hasWallet(1)->create([
             'name' => 'Javier',
             'surname' => 'Florido',
             'nick' => 'Administrador',
             'email' => 'jflorido94@hotmail.com',
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
             ]);
-        User::factory(20)->hasWallet(1)->create();
+        User::factory(10) ->hasStocks(random_int(0,10))
+                          ->hasSells(random_int(0,5))
+                          ->hasWallet(1)
+                          ->create();
     }
 }
