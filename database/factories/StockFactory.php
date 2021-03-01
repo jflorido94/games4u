@@ -23,7 +23,7 @@ class StockFactory extends Factory
     public function definition()
     {
         return [
-            'game_id' => $this->faker->numberBetween(500,1000),
+            'game_id' => $this->faker->numberBetween(3498,10000),
             'price' => $this->faker->randomNumber(rand(2, 4)),
             'condition_id' => function () {
                 return Condition::all()->random()->id;

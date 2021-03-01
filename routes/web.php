@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,15 +16,64 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
 
-    // return \App\Models\Wallet::all()->dd();
+Route::group(['prefix' => 'api'], function () {
 
-    // return \App\Models\Wallet::with('user')->get()->dd();
-    // return \App\Models\User::with('wallet')->find(4);
+    Route::group(['prefix' => 'games'], function () {
+
+        Route::get('/', [ApiController::class, 'games']);
+
+        Route::get('get/{id}', [ApiController::class, 'gameId']);
+
+        Route::get('platform/{id}', [ApiController::class, 'platformGame']);
+
+    });
+
+    Route::group(['prefix' => 'platforms'], function () {
+
+        Route::get('/', [ApiController::class, 'platforms']);
+
+        Route::get('get/{id}', [ApiController::class, 'platformId']);
+
+
+    });
+});
+
+
+Route::group(['prefix' => 'stocks'], function () {
+
+    Route::get('/', function () {
+        return "stocks/";
+    });
+
+    Route::get('/filtro', function () {
+        return "stocks/filtro";
+    });
+});
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['prefix' => 'sells'], function () {
+        Route::get('/', function () {
+            return "sells/";
+        });
+        Route::get('/{id}', function ($id) {
+            return "sells/{{$id}}";
+        });
+    });
+
+    Route::group(['prefix' => 'messages'], function () {
+        Route::get('/', function () {
+            return "messages/";
+        });
+        Route::get('/{id}', function ($id) {
+            return "messages/{{$id}}";
+        });
+    });
 });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
