@@ -1,7 +1,15 @@
 <?php
 
-use App\Http\Controllers\ApiController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ApiController;
+use App\Http\Controllers\ConditionController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\SellController;
+use App\Http\Controllers\StockController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\WalletController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// ---- API Controller ------
 
 Route::group(['prefix' => 'api'], function () {
 
@@ -40,36 +50,46 @@ Route::group(['prefix' => 'api'], function () {
     });
 });
 
+// ----- Stocks Controller -------
 
 Route::group(['prefix' => 'stocks'], function () {
 
-    Route::get('/', function () {
-        return "stocks/";
-    });
+    Route::get('/', [StockController::class, 'index']);
 
-    Route::get('/filtro', function () {
-        return "stocks/filtro";
-    });
+    Route::get('filtro', [StockController::class, 'filtro']);
 });
 
+
+
+
+// ----- Auth -----
+
 Route::group(['middleware' => ['auth']], function () {
+
+    // ----- Sells Controller -------
     Route::group(['prefix' => 'sells'], function () {
-        Route::get('/', function () {
-            return "sells/";
-        });
-        Route::get('/{id}', function ($id) {
-            return "sells/{{$id}}";
-        });
+
+        Route::get('/', [SellController::class, 'index']);
+
+        Route::get('{id}', [SellController::class, 'games']);
     });
 
+    // ----- Messages Controller --------
     Route::group(['prefix' => 'messages'], function () {
-        Route::get('/', function () {
-            return "messages/";
-        });
-        Route::get('/{id}', function ($id) {
-            return "messages/{{$id}}";
-        });
+
+        Route::get('/', [MessageController::class, 'games']);
+
+        Route::get('{id}', [MessageController::class, 'games']);
     });
+
+
+});
+Route::group(['prefix' => 'users'], function () {
+
+    Route::get('/', [UserController::class, 'index']);
+
+    Route::get('/{id}', [UserController::class, 'index']);
+
 });
 
 Route::get('/dashboard', function () {

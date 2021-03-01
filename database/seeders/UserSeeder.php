@@ -19,6 +19,7 @@ class UserSeeder extends Seeder
             'name' => 'Javier',
             'surname' => 'Florido',
             'nick' => 'Administrador',
+            'admin' => true,
             'email' => 'jflorido94@hotmail.com',
             ]);
         User::factory(10)
