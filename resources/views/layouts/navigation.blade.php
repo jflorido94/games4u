@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-6 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')">
+                    <x-nav-link :href="route('catalogo')" :active="request()->routeIs('catalogo')">
                         {{ __('Catálogo') }}
                     </x-nav-link>
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
@@ -41,14 +41,24 @@
 
                     <div class="hidden space-x-6 sm:-my-px sm:ml-10 sm:flex">
                         <!-- Buy -->
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                            title="Vender nuevo juego">
+                            <i class="fas fa-plus-circle"></i>
+                            <!--Añadir juego -->
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                            title="Juegos en venta">
+                            <i class="fas fa-cart-arrow-down"></i>
+                            <!--Mis juegos en venta -->
+                        </x-nav-link>
                         <x-nav-link :href="route('register')" :active="request()->routeIs('register')" title="Mis Compras">
-                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                            <!--Carrito -->
+                            <i class="fas fa-shopping-cart"></i>
+                            <!--Mis compras -->
                         </x-nav-link>
                         <x-nav-link :href="route('register')" :active="request()->routeIs('register')" title="Mis Mensajes">
                             <span
                                 class="bg-green-200 text-green-700 px-2 py-1 rounded-full text-xs">{{ session('CountMessages') }}</span>
-                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <i class="far fa-envelope"></i>
                             <!--Mensajes -->
                         </x-nav-link>
                     </div>
@@ -78,8 +88,9 @@
                                 <form method="POST" action="{{ route('logout') }}">
                                     @csrf
 
-                                    <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
-                                                                                        this.closest('form').submit();">
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
+                                                                                                                this.closest('form').submit();">
                                         {{ __('Cerrar sesion') }}
                                     </x-dropdown-link>
                                 </form>
@@ -108,38 +119,70 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('catalogo')" :active="request()->routeIs('catalogo')">
+                {{ __('Catálogo') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('usuarios')" :active="request()->routeIs('usuarios')">
+                {{ __('Usuarios') }}
             </x-responsive-nav-link>
         </div>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200">
             <div class="flex items-center px-4">
-                <div class="flex-shrink-0">
-                    <svg class="h-10 w-10 fill-current text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                    </svg>
-                </div>
-
                 <div class="ml-3">
-                    {{-- <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div> --}}
+                    @guest
+                        <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                            {{ __('Login') }}
+                        </x-responsive-nav-link>
+                        <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Registrarse') }}
+                        </x-responsive-nav-link>
+                    @endguest
+                    @auth
+                        <div class="font-medium text-base text-gray-800">{{ Auth::user()->nick }}</div>
+
+
+                        <div class="mt-3 space-1">
+                            <!-- Buy -->
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                                title="Vender nuevo juego">
+                                <i class="fas fa-plus-circle"></i>
+                                <!--Añadir juego -->
+                            </x-nav-link>
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                                title="Juegos en venta">
+                                <i class="fas fa-cart-arrow-down"></i>
+                                <!--Mis juegos en venta -->
+                            </x-nav-link>
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                                title="Mis Compras">
+                                <i class="fas fa-shopping-cart"></i>
+                                <!--Mis compras -->
+                            </x-nav-link>
+                            <x-nav-link :href="route('register')" :active="request()->routeIs('register')"
+                                title="Mis Mensajes">
+                                <i class="far fa-envelope"></i>
+                                <span
+                                class="bg-green-200 text-green-700 px-2 py-1 rounded-full text-xs">{{ session('CountMessages') }}</span>
+                                <!--Mensajes -->
+                            </x-nav-link>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                    {{ __('Log out') }}
+                                </x-responsive-nav-link>
+                            </form>
+                        </div>
+                    @endauth
                 </div>
-            </div>
-
-            <div class="mt-3 space-y-1">
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')" onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log out') }}
-                    </x-responsive-nav-link>
-                </form>
             </div>
         </div>
     </div>
