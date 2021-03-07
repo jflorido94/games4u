@@ -12,6 +12,7 @@
                             <thead>
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
                                     <th class="py-3 px-6 text-left">Juego</th>
+                                    <th class="py-3 px-6 text-left">Plataforma</th>
                                     <th class="py-3 px-6 text-left">Condicion</th>
                                     <th class="py-3 px-6 text-center">Vendedor</th>
                                     <th class="py-3 px-6 text-center">Precio</th>
@@ -24,6 +25,9 @@
                                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
                                             <span>{{ $item->game_id }}</span>
+                                        </td>
+                                        <td class="py-3 px-6 text-left">
+                                            <span>{{ $item->platform_id }}</span>
                                         </td>
                                         <td class="py-3 px-6 text-left">
                                             <span>{{ $item->condition->name }}</span>

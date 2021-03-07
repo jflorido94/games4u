@@ -18,6 +18,18 @@ class StockController extends Controller
     {
         session()->put('CountMessages', count(Message::where('read', true)->where('to_user_id', Auth::user()->id)->get()));
         $datos = Stock::with('condition', 'user')->paginate(10);
+
+        foreach ($datos as $item) {
+
+            $game = app(ApiController::class)->gameId($item->game_id);
+            $plat = app(ApiController::class)->platformId($item->platform_id);
+
+
+            $item->platform_id = $plat->name;
+
+            $item->game_id = $game->name;
+        }
+
         return view('stocks.index', compact('datos'));
     }
 

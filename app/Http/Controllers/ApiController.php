@@ -16,50 +16,8 @@ class ApiController extends Controller
         $client = new Client();
         $url = env('API_ENDPOINT') . "games";
 
-        $params = [];
-
-        $headers = [
-            'key' => env('KEY_API'),
-        ];
-
-        $response = $client->request('GET', $url, [
-            //'query' => $params,
-            'headers' => $headers,
-            'verify'  => false,
-        ]);
-
-        return dd(json_decode($response->getBody()));
-        // return view('projects.apiwithkey', compact('responseBody'));
-    }
-
-    public function GameId($id)
-    {
-        $client = new Client();
-        $url = env('API_ENDPOINT') . "games/" . $id;
-
-        $params = [];
-
-        $headers = [
-            'key' => env('KEY_API'),
-        ];
-
-        $response = $client->request('GET', $url, [
-            //'query' => $params,
-            'headers' => $headers,
-            'verify'  => false,
-        ]);
-
-        return dd(json_decode($response->getBody()));
-        // return view('projects.apiwithkey', compact('responseBody'));
-    }
-
-    public function searchGame($string)
-    {
-        $client = new Client();
-        $url = env('API_ENDPOINT') . "games";
-
         $params = [
-            'search' => $string,
+            'page_size' => 40,
         ];
 
         $headers = [
@@ -72,7 +30,52 @@ class ApiController extends Controller
             'verify'  => false,
         ]);
 
-        return dd(json_decode($response->getBody()));
+        return json_decode($response->getBody());
+        // return view('projects.apiwithkey', compact('responseBody'));
+    }
+
+    public function gameId($id)
+    {
+        $client = new Client();
+        $url = env('API_ENDPOINT') . "games/" . $id;
+
+        $params = [];
+
+        $headers = [
+            'key' => env('KEY_API'),
+        ];
+
+        $response = $client->request('GET', $url, [
+            // 'query' => $params,
+            'headers' => $headers,
+            'verify'  => false,
+        ]);
+
+        return json_decode($response->getBody());
+        // return view('projects.apiwithkey', compact('responseBody'));
+    }
+
+    public function searchGame($string)
+    {
+        $client = new Client();
+        $url = env('API_ENDPOINT') . "games";
+
+        $params = [
+            'search' => $string,
+            'platforms' => [1,4,7,14,18,168,187]
+        ];
+
+        $headers = [
+            'key' => env('KEY_API'),
+        ];
+
+        $response = $client->request('GET', $url, [
+            'query' => $params,
+            'headers' => $headers,
+            'verify'  => false,
+        ]);
+
+        return json_decode($response->getBody());
         // return view('projects.apiwithkey', compact('responseBody'));
     }
 
@@ -95,7 +98,7 @@ class ApiController extends Controller
             'verify'  => false,
         ]);
 
-        return dd(json_decode($response->getBody()));
+        return json_decode($response->getBody());
         // return view('projects.apiwithkey', compact('responseBody'));
     }
 
@@ -107,19 +110,21 @@ class ApiController extends Controller
         $client = new Client();
         $url = env('API_ENDPOINT') . "platforms";
 
-        $params = [];
+        $params = [
+            'page_size' => 100,
+        ];
 
         $headers = [
             'key' => env('KEY_API'),
         ];
 
         $response = $client->request('GET', $url, [
-            //'query' => $params,
+            'query' => $params,
             'headers' => $headers,
             'verify'  => false,
         ]);
 
-        return dd(json_decode($response->getBody()));
+        return json_decode($response->getBody());
         // return view('projects.apiwithkey', compact('responseBody'));
     }
 
@@ -140,7 +145,7 @@ class ApiController extends Controller
             'verify'  => false,
         ]);
 
-        return dd(json_decode($response->getBody()));
+        return json_decode($response->getBody());
         // return view('projects.apiwithkey', compact('responseBody'));
     }
 
