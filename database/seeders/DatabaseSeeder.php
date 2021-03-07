@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             ConditionSeeder::class,
             UserSeeder::class,
             MessageSeeder::class,
+            SellSeeder::class,
+            StockSeeder::class
         ]);
     }
 }

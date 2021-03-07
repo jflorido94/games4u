@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Condition;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class ConditionController extends Controller

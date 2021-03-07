@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Stock;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StockController extends Controller
 {
@@ -14,7 +16,9 @@ class StockController extends Controller
      */
     public function index()
     {
-        //
+        session()->put('CountMessages', count(Message::where('read', true)->where('to_user_id', Auth::user()->id)->get()));
+        $datos = Stock::with('condition', 'user')->paginate(10);
+        return view('stocks.index', compact('datos'));
     }
 
     /**

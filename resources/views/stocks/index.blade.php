@@ -6,17 +6,16 @@
 
                     <div class="card">
                         <div class="card-header">
-                            Usuarios
+                            Catalogo
                         </div>
                         <table class="min-w-max w-full table-auto card-body">
                             <thead>
                                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Usuario</th>
-                                    <th class="py-3 px-6 text-left">Nombre</th>
-                                    <th class="py-3 px-6 text-left">Email</th>
-                                    <th class="py-3 px-6 text-center">Rol</th>
+                                    <th class="py-3 px-6 text-left">Juego</th>
+                                    <th class="py-3 px-6 text-left">Condicion</th>
+                                    <th class="py-3 px-6 text-center">Vendedor</th>
+                                    <th class="py-3 px-6 text-center">Precio</th>
                                     <th class="py-3 px-6 text-center">Acciones</th>
-                                    <th class="py-3 px-6 text-center">Pruebas</th>
                                 </tr>
                             </thead>
                             <tbody class="text-gray-600 text-sm font-medium">
@@ -24,29 +23,16 @@
                                 @foreach ($datos as $item)
                                     <tr class="border-b border-gray-200 hover:bg-gray-100">
                                         <td class="py-3 px-6 text-left">
-                                            <div class="flex items-center">
-                                                <div class="mr-2">
-                                                    <img class="w-6 h-6 rounded-full"
-                                                        src="https://randomuser.me/api/portraits/men/1.jpg" />
-                                                </div>
-                                                <span>{{ $item->nick }}</span>
-                                            </div>
-                                        </td>
-                                        <td class="py-3 px-6 text-left ">
-                                            <span>{{ $item->name . ' ' . $item->surname }}</span>
+                                            <span>{{ $item->game_id }}</span>
                                         </td>
                                         <td class="py-3 px-6 text-left">
-                                            <span>{{ $item->email }}</span>
+                                            <span>{{ $item->condition->name }}</span>
                                         </td>
                                         <td class="py-3 px-6 text-center">
-                                            @if ($item->admin == 1)
-                                                <span
-                                                    class="bg-green-200 text-green-700 py-1 px-3 rounded-full text-xs">Administrador</span>
-                                            @else
-                                                <span
-                                                    class="bg-gray-200 text-gray-700 py-1 px-3 rounded-full text-xs">Usuario</span>
-                                            @endif
-
+                                            <span>{{ $item->user->nick }}</span>
+                                        </td>
+                                        <td class="py-3 px-6 text-center">
+                                            <span>{{ $item->price ." €"}}</span>
                                         </td>
                                         <td class="py-3 px-6 text-center">
                                             <div class="flex item-center justify-center">
@@ -56,9 +42,9 @@
                                                     <i class="far fa-eye"></i>
                                                 </a>
                                                 <a href="{{ route('detallesUsuario', ['id' => $item->id]) }}"
-                                                    title="Mensajes"
+                                                    title="Comprar"
                                                     class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                                    <i class="far fa-comments"></i>
+                                                    <i class="fas fa-shopping-cart"></i>
                                                 </a>
                                                 <a href="{{ route('detallesUsuario', ['id' => $item->id]) }}"
                                                     title="Eliminar"
@@ -66,12 +52,6 @@
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
                                             </div>
-                                        </td>
-                                        <td class="py-3 px-6 text-left">
-                                            @if ($item->sells->count() != 0 )
-
-                                            <span>{{ $item->sells->first()->stocks->first()->id }}</span>
-                                            @endif
                                         </td>
                                     </tr>
                                 @endforeach

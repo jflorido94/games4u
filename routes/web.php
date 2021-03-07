@@ -24,7 +24,7 @@ use App\Http\Controllers\WalletController;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 // ---- API Controller ------
 
@@ -50,21 +50,10 @@ Route::group(['prefix' => 'api'], function () {
     });
 });
 
-// ----- Stocks Controller -------
-
-Route::group(['prefix' => 'stocks'], function () {
-
-    Route::get('/', [StockController::class, 'index'])->name('catalogo');
-
-    Route::get('filtro', [StockController::class, 'filtro'])->name('buscando');
-});
-
-
-
 
 // ----- Auth -----
 
-Route::group(['middleware' => ['auth']], function () {
+// Route::group(['middleware' => ['auth']], function () {
 
     // ----- Sells Controller -------
     Route::group(['prefix' => 'sells'], function () {
@@ -83,13 +72,22 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-});
+// });
 Route::group(['prefix' => 'users'], function () {
 
     Route::get('/', [UserController::class, 'index'])->name('usuarios');
 
     Route::get('/{id}', [UserController::class, 'index'])->name('detallesUsuario');
 
+});
+
+// ----- Stocks Controller -------
+
+Route::group(['prefix' => 'stocks'], function () {
+
+    Route::get('/', [StockController::class, 'index'])->name('catalogo');
+
+    Route::get('filtro', [StockController::class, 'filtro'])->name('buscando');
 });
 
 Route::get('/dashboard', function () {

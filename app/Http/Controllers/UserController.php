@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Response;
-
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -19,10 +19,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        $datos=User::all();
-
-        // return $datos;
-
+        session()->put('CountMessages' , count(Message::where('read',true)->where('to_user_id',Auth::user()->id)->get()));
+        $datos=User::with('sells','sells.stocks','stocks')->paginate(10);
         return view('users.index',compact('datos'));
     }
 

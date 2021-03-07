@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sell;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class SellController extends Controller
 {
@@ -14,7 +16,10 @@ class SellController extends Controller
      */
     public function index()
     {
-        //
+        session()->put('CountMessages', count(Message::where('read', true)->where('to_user_id', Auth::user()->id)->get()));
+        $datos = Sell::with('stocks','stocks.condition', 'user')->get();
+        return dd($datos[1]);
+        // return view('sells.index', compact('datos'));
     }
 
     /**

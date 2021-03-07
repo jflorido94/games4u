@@ -19,7 +19,7 @@ class CreateStocksTable extends Migration
             $table->foreignId('sell_id')->nullable()->constrained();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('condition_id')->constrained();
-            $table->unsignedBigInteger('price');
+            $table->unsignedFloat('price');
             $table->timestamps();
         });
     }

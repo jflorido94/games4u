@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Sell;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class SellFactory extends Factory
@@ -22,7 +23,9 @@ class SellFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => function () {
+                    return User::all()->random()->id;
+            },
         ];
     }
 }

@@ -21,10 +21,8 @@ class UserSeeder extends Seeder
             'nick' => 'Administrador',
             'admin' => true,
             'email' => 'jflorido94@hotmail.com',
-            ]);
+        ]);
         User::factory(10)
-            ->hasStocks(random_int(0,10))
-            ->hasSells(random_int(0,5))
             ->hasWallet()
             ->create();
     }
