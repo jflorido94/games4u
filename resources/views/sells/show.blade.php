@@ -4,7 +4,7 @@
 
             <div class=" bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4 flex justify-center">
-                    <span>Catálogo </span>
+                    <span>Detalles compra </span>
                 </div>
                 <table class="min-w-max w-full table-auto items-center px-6 py-4">
                     <thead>
@@ -19,7 +19,7 @@
                     </thead>
                     <tbody class="text-gray-600 text-sm font-medium">
 
-                        @foreach ($datos as $item)
+                        @foreach ($datos->stocks as $item)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left">
                                     <span>{{ $item->game_id }}</span>
@@ -42,18 +42,15 @@
                                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <i class="far fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('comprar', ['id' => $item->id]) }}" title="Comprar"
-                                            class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <i class="far fa-money-bill-alt"></i>
-                                        </a>
                                     </div>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
-                <div class="bg-gray-200 px-6 py-4">
-                    {{ $datos->links() }}
+                <div class="bg-gray-200 px-6 py-4 flex justify-between">
+                    <span class=" text-center">{{$datos->created_at}}</span>
+                    <span class=" text-center">{{"Precio total: " . $datos->stocks->sum('price'). ' €'}}</span>
                 </div>
             </div>
         </div>

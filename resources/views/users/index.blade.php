@@ -2,8 +2,8 @@
     <div class="p-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class=" bg-white shadow-lg rounded-lg overflow-hidden">
-                <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4">
-                    Usuarios
+                <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4 flex justify-center">
+                    <span>Usuarios </span>
                 </div>
                 <table class="min-w-max w-full table-auto items-center px-6 py-4">
                     <thead>
@@ -13,7 +13,6 @@
                             <th class="py-3 px-6 text-left">Email</th>
                             <th class="py-3 px-6 text-center">Rol</th>
                             <th class="py-3 px-6 text-center">Acciones</th>
-                            <th class="py-3 px-6 text-center">Pruebas</th>
                         </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-medium">
@@ -51,21 +50,11 @@
                                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <i class="far fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('detallesUsuario', ['id' => $item->id]) }}" title="Mensajes"
+                                        <a href="{{ route('conversacion', ['id' => $item->id]) }}" title="Mensajes"
                                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
                                             <i class="far fa-comments"></i>
                                         </a>
-                                        <a href="{{ route('detallesUsuario', ['id' => $item->id]) }}" title="Eliminar"
-                                            class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
                                     </div>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    @if ($item->sells->count() != 0)
-
-                                        <span>{{ $item->sells->first()->stocks->first()->id }}</span>
-                                    @endif
                                 </td>
                             </tr>
                         @endforeach

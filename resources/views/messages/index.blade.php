@@ -4,16 +4,13 @@
 
             <div class=" bg-white shadow-lg rounded-lg overflow-hidden">
                 <div class="bg-gray-200 text-gray-700 text-lg px-6 py-4 flex justify-center">
-                    <span>Catálogo </span>
+                    <span> Mis mensajes </span>
                 </div>
                 <table class="min-w-max w-full table-auto items-center px-6 py-4">
                     <thead>
                         <tr class="bg-gray-300 text-gray-600 uppercase text-sm leading-normal">
-                            <th class="py-3 px-6 text-left">Juego</th>
-                            <th class="py-3 px-6 text-left">Plataforma</th>
-                            <th class="py-3 px-6 text-left">Condicion</th>
-                            <th class="py-3 px-6 text-center">Vendedor</th>
-                            <th class="py-3 px-6 text-center">Precio</th>
+                            <th class="py-3 px-6 text-left">Usuario</th>
+                            <th class="py-3 px-6 text-center">Sin leer</th>
                             <th class="py-3 px-6 text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -22,29 +19,25 @@
                         @foreach ($datos as $item)
                             <tr class="border-b border-gray-200 hover:bg-gray-100">
                                 <td class="py-3 px-6 text-left">
-                                    <span>{{ $item->game_id }}</span>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <span>{{ $item->platform_id }}</span>
-                                </td>
-                                <td class="py-3 px-6 text-left">
-                                    <span>{{ $item->condition->name }}</span>
+                                    <span>{{ $item->nick }}</span>
                                 </td>
                                 <td class="py-3 px-6 text-center">
-                                    <span>{{ $item->user->nick }}</span>
+                                    @if ($sinleer = $item->sent_messages
+        ->where('to_user_id', Auth::user()->id)
+        ->where('read', false)
+        ->count())
+                                        <span
+                                            class="bg-green-200 text-green-700 px-2 py-1 rounded-full text-xs">{{ $sinleer }}</span>
+
+                                    @endif
                                 </td>
-                                <td class="py-3 px-6 text-center">
-                                    <span>{{ $item->price . ' €' }}</span>
-                                </td>
+
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
-                                        <a href="{{ route('juego', ['id' => $item->id]) }}" title="Detalles"
+                                        <a href="{{ route('conversacion', ['id' => $item->id]) }}"
+                                            title="Ver conversacion"
                                             class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <i class="far fa-eye"></i>
-                                        </a>
-                                        <a href="{{ route('comprar', ['id' => $item->id]) }}" title="Comprar"
-                                            class="w-4 mr-2 transform hover:text-purple-500 hover:scale-110">
-                                            <i class="far fa-money-bill-alt"></i>
+                                            <i class="far fa-comments"></i>
                                         </a>
                                     </div>
                                 </td>
@@ -53,7 +46,7 @@
                     </tbody>
                 </table>
                 <div class="bg-gray-200 px-6 py-4">
-                    {{ $datos->links() }}
+                    {{-- {{ $datos->links() }} --}}
                 </div>
             </div>
         </div>

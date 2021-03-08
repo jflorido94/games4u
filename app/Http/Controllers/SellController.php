@@ -16,10 +16,12 @@ class SellController extends Controller
      */
     public function index()
     {
-        session()->put('CountMessages', count(Message::where('read', true)->where('to_user_id', Auth::user()->id)->get()));
-        $datos = Sell::with('stocks','stocks.condition', 'user')->get();
-        return dd($datos[1]);
-        // return view('sells.index', compact('datos'));
+        if (isset(Auth::user()->id)) {
+            session()->put('CountMessages', count(Message::where('read', false)->where('to_user_id', Auth::user()->id)->get()));
+        }
+        $datos = Sell::with('stocks')->where('user_id', Auth::user()->id)->paginate(10);
+
+        return view('sells.index', compact('datos'));
     }
 
     /**
@@ -49,9 +51,32 @@ class SellController extends Controller
      * @param  \App\Models\Sell  $sell
      * @return \Illuminate\Http\Response
      */
-    public function show(Sell $sell)
+    public function show($id)
     {
-        //
+        if (isset(Auth::user()->id)) {
+            session()->put('CountMessages', count(Message::where('read', false)->where('to_user_id', Auth::user()->id)->get()));
+        }
+
+        $datos = Sell::with('stocks', 'stocks.user', 'stocks.condition')->find($id);
+
+
+        if ($datos->user_id == Auth::user()->id) {
+
+            foreach ($datos->stocks as $item) {
+
+                $game = app(ApiController::class)->gameId($item->game_id);
+                $plat = app(ApiController::class)->platformId($item->platform_id);
+
+
+                $item->platform_id = $plat->name;
+
+                $item->game_id = $game->name;
+            }
+
+            return view('sells.show', compact('datos'));
+        } else {
+
+        }
     }
 
     /**
@@ -60,7 +85,7 @@ class SellController extends Controller
      * @param  \App\Models\Sell  $sell
      * @return \Illuminate\Http\Response
      */
-    public function edit(Sell $sell)
+    public function edit($id)
     {
         //
     }
@@ -72,7 +97,7 @@ class SellController extends Controller
      * @param  \App\Models\Sell  $sell
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Sell $sell)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -83,7 +108,7 @@ class SellController extends Controller
      * @param  \App\Models\Sell  $sell
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sell $sell)
+    public function destroy($id)
     {
         //
     }

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -14,7 +18,33 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        if (isset(Auth::user()->id)) {
+            session()->put('CountMessages', Message::where('read', false)->where('to_user_id', Auth::user()->id)->count());
+        }
+        // $datos = User::with('sent_messages', 'received_messages')
+        //     ->where('to_user_id', Auth::user()->id)
+        //     ->orWhere('from_user_id', Auth::user()->id)
+        //     ->paginate(10);
+
+        $users = User::with(['sent_messages' => function($q){
+            $q->where('to_user_id', Auth::user()->id);
+        }])->with(['received_messages' => function($q){
+            $q->where('from_user_id', Auth::user()->id);
+        }])
+        ->get();
+
+        $datos = new Collection();
+
+        foreach ($users as $item ) {
+            if ($item->sent_messages->count()>0 || $item->received_messages->count()>0 ) {
+                $datos->push((object)$item);
+            }
+        }
+
+        $datos; //intente hacer paginate con esta variable. La cree para quitar los usuarios con los que nunca se haya tenido conversacion.
+
+            // return dd($datos);
+        return view('messages.index', compact('datos'));
     }
 
     /**
@@ -44,9 +74,20 @@ class MessageController extends Controller
      * @param  \App\Models\Message  $message
      * @return \Illuminate\Http\Response
      */
-    public function show(Message $message)
+    public function show($id)
     {
-        //
+        return redirect()->route("mensajes");
+        // if (isset(Auth::user()->id)) {
+        //     session()->put('CountMessages', Message::where('read', false)->where('to_user_id', Auth::user()->id)->count());
+        // }
+        // $datos = Message::with('from_user', 'to_user')
+        //     ->where('to_user_id', Auth::user()->id)
+        //     ->orWhere('from_user_id', Auth::user()->id)
+        //     ->where
+        //     ->paginate(10);
+
+        //     // return dd($datos);
+        // return view('messages.show', compact('datos'));
     }
 
     /**
